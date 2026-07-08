@@ -339,9 +339,9 @@ ifr_data <- data.frame(
             "AIV (53.5 years)",
             "AIV (38 years)",
             "AIV (18.5 years)"),
-  estimate = c(4.7, 16, 16, 32, 46),
-  lower = c(2.9, 16, 5.6, 9.6, 17),
-  upper = c(6.5, 16, 33, 75, 97)
+  estimate = c(4.7, 16, 46, 32, 16),
+  lower = c(2.9, 16, 17, 9.6, 5.6),
+  upper = c(6.5, 16, 97, 75, 33)
 )
 
 # Order for plotting
