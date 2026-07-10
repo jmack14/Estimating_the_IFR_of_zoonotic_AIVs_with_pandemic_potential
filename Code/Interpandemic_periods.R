@@ -170,7 +170,8 @@ CI_theta
 # Likelihood ratio test
 # ============================================================
 
-LR <- -2 * (logLik(mod0)[1] - logLik(mod)[1])
+LRT <- -2 * (logLik(mod0)[1] - logLik(mod)[1])
+anova(mod0, mod)
 
 # ============================================================
 # Save results
