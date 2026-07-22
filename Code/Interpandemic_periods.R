@@ -189,7 +189,7 @@ save(
 
 Timeline <- data.frame(
   what = c(
-    "1781 - Russian Catarrh", "1830 - Influenza Pandemic", "1889 - Russian flu (H3)",
+    "1781 - Russian Catarrh", "1830 - Influenza Pandemic", "1889 - Russian flu\n(Subtype uncertain; reported as H3)",
     "1918 - Spanish flu (H1)", "1957 - Asiatic flu (H2)", "1968 - Hong Kong flu (H3)", "2009 - H1N1"
   ),
   when = ymd(c(
@@ -203,7 +203,7 @@ Periods <- data.frame(
   what = c(
     "1781 - Russian Catarrh/1830 - Influenza Pandemic",
     "1830 - Influenza Pandemic/1889 - Russian flu (H3)",
-    "1889 - Russian flu (H3)/1918 - Spanish flu (H1)",
+    "1889 - Russian flu\n(Subtype uncertain; reported as H3)/1918 - Spanish flu (H1)",
     "1918 - Spanish flu (H1)/1957 - Asiatic flu (H2)",
     "1957 - Asiatic flu (H2)/1968 - Hong Kong flu (H3)",
     "1968 - Hong Kong flu (H3)/2009 - H1N1"
