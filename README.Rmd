@@ -1,7 +1,7 @@
 # README
 
 ## Title 
-Using an evolutionary epidemiological model of pandemics to estimate the infection fatality ratio for humans infected with avian influenza viruses
+Estimating the infection fatality ratio of zoonotic avian influenza viruses with pandemic potential using an evolutionary epidemiological model
 
 ---
 
@@ -43,14 +43,20 @@ The `Code/` directory contains the following scripts:
 - `IFR.R`: Estimates the annual number of human AIV infections and the infection fatality ratio
 - `Pandemic_delay.R`: Estimates the effect of preventing AIV spillovers on pandemic delay time
 - `Spillover_comparison.R`: Compares estimated number of zoonotic spillovers with Day et al.,2006
+- `Parameter_sensitivity.R`: Parameter sensitivity analysis
+- `Genotype_sensitivity.R`: Genotype sensitivity analysis
+- `Pandemic_sensitivity.R`: Pandemic sensitivity analysis
+- `Reporting_sensitivity.R`: Death reporting sensitivity analysis
+- `Mechanistic_boundary.R`: Mechanistic boundary analysis
 
 
 ### Ouput
 The `Output/` directory contains output files:
 - `mean_nh_38.csv`, `mean_nh_53.5.csv`, `mean_nh_18.5.csv`
 - `transformed_samples_38.csv`, `transformed_samples_53.5.csv`, `transformed_samples_18.5.csv`
+- `Parameter_sensitivity.csv`, `Genotype_sensitivity.csv`, `Pandemic_sensitivity.csv`, `Reporting_sensitivity.csv`, `Mechanistic_boundary.csv`
 
-These files contain estimates of the annual number of human AIV infections and transformed posterior samples for mean interpandemic periods of 38, 53.5, and 18.5 years.
+These files contain estimates of the annual number of human AIV infections and transformed posterior samples for mean interpandemic periods of 38, 53.5, and 18.5 years. They also contain the results of the sensitivity analyses and mechanistic boundary analysis. 
 
 ---
 
@@ -63,4 +69,9 @@ These files contain estimates of the annual number of human AIV infections and t
    - `IFR.R`
    - `Pandemic_delay.R`
    - `Spillover_comparison.R`
+   - `Parameter_sensitivity.R`
+   - `Genotype_sensitivity.R`
+   - `Pandemic_sensitivity.R`
+   - `Reporting_sensitivity.R`
+   - `Mechanistic_boundary.R`
 5. Outputs will be saved automatically to the `Output/` directory.
