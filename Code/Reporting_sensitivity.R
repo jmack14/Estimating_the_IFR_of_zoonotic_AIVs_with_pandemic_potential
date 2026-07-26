@@ -34,7 +34,7 @@ ifr_results <- lapply(
     adjusted_deaths <- reported_deaths / reporting_fraction
     
     # IFR
-    IFR <- adjusted_deaths / dat38$meannh
+    IFR <- 100 * adjusted_deaths / dat38$meannh
     
     data.frame(
       Reporting = reporting_fraction,
@@ -56,6 +56,6 @@ print(ifr_results)
 # Save
 write.csv(
   ifr_results,
-  "IFR_reporting_sensitivity_38.csv",
+  "Reporting_sensitivity.csv",
   row.names = TRUE
 )
