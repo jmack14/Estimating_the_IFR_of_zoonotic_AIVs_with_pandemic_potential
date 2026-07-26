@@ -50,15 +50,6 @@ run_weighting <- function(genotypes, weighting){
   
   n <- nrow(genotypes)
   
-  
-  # genotype weights rho_i
-  if(weighting == "equal"){
-    
-    rho <- rep(1/n,n)
-    
-  }
-  
-  
   if(weighting == "Dirichlet"){
     
     rho <- rgamma(n,shape=1)
@@ -90,7 +81,7 @@ run_weighting <- function(genotypes, weighting){
   # solve for zoonotic spillovers
   Lambda <- function(mean_nz, Lambda_target){
     
-    nz <- 0:10000
+    nz <- 0:100000
     
     PNz_nz <- dpois(nz,mean_nz)
     
@@ -122,16 +113,10 @@ run_weighting <- function(genotypes, weighting){
   
   # annual infections
   mean_nh <- weighted_m * mean_nz
-  
-  
-  # IFR
-  IFR <- 20.6 / mean_nh
-  
-  
+
   data.frame(
     weighting = weighting,
-    mean_nh = mean_nh,
-    IFR = IFR
+    mean_nh = mean_nh
   )
   
 }
@@ -173,8 +158,6 @@ genotypes <- generate_genotypes(
 # Apply alternative genotype weights
 SA_results <- bind_rows(
   
-  run_weighting(genotypes,"equal"),
-  
   run_weighting(genotypes,"Dirichlet"),
   
   run_weighting(genotypes,"R0_positive"),
@@ -196,32 +179,30 @@ SA_summary <- SA_results %>%
   summarise(
     
     median_infections =
-      median(mean_nh),
+      round(median(mean_nh), 0),
     
     infections_lower95 =
-      quantile(mean_nh,0.025),
+      round(quantile(mean_nh, 0.025), 0),
     
     infections_upper95 =
-      quantile(mean_nh,0.975),
-    
+      round(quantile(mean_nh, 0.975), 0),
     
     median_IFR =
-      20.6 / median(mean_nh),
+      round(100 * 20.6 / median(mean_nh), 3),
     
     IFR_lower95 =
-      20.6 / quantile(mean_nh,0.975),
+      round(100 * 20.6 / quantile(mean_nh, 0.975), 3),
     
     IFR_upper95 =
-      20.6 / quantile(mean_nh,0.025)
+      round(100 * 20.6 / quantile(mean_nh, 0.025), 3)
     
   )
-
 
 print(SA_summary)
 
 
 write.csv(
   SA_summary,
-  "Genotype_weighting_sensitivity_analysis.csv",
+  "Genotype_sensitivity.csv",
   row.names=FALSE
 )
