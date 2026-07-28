@@ -162,7 +162,7 @@ res_3 <- run_scenario(
     R0 = list(rate = 20),
     a = c(0.000012, 0.000024),
     Rstar = c(1, 2, 1.1),
-    psi = list(shape = delta0/theta, scale = 18.5/(delta0/theta))
+    psi = list(shape = delta0/theta, scale = 18.6/(delta0/theta))
   ),
   num_samples
 )
@@ -173,11 +173,11 @@ res_3 <- run_scenario(
 
 write.csv(res_1$transformed_samples, "transformed_samples_38.csv", row.names = FALSE, quote = FALSE)
 write.csv(res_2$transformed_samples, "transformed_samples_53.5.csv", row.names = FALSE, quote = FALSE)
-write.csv(res_3$transformed_samples, "transformed_samples_18.5.csv", row.names = FALSE, quote = FALSE)
+write.csv(res_3$transformed_samples, "transformed_samples_18.6.csv", row.names = FALSE, quote = FALSE)
 
 write.csv(res_1$sort_output, "mean_nh_38.csv", row.names = FALSE, quote = FALSE)
 write.csv(res_2$sort_output, "mean_nh_53.5.csv", row.names = FALSE, quote = FALSE)
-write.csv(res_3$sort_output, "mean_nh_18.5.csv", row.names = FALSE, quote = FALSE)
+write.csv(res_3$sort_output, "mean_nh_18.6.csv", row.names = FALSE, quote = FALSE)
 
 # ============================================================
 # Plot the mean annual number of human infections with AIV: Fig2A
@@ -186,7 +186,7 @@ write.csv(res_3$sort_output, "mean_nh_18.5.csv", row.names = FALSE, quote = FALS
 cols <- c(
   "53.5" = "#1f78b4",  # blue
   "38"   = "#e31a1c",  # red
-  "18.5" = "#ff7f00"   # orange
+  "18.6" = "#ff7f00"   # orange
 )
 
 base_theme <- theme_bw() +
@@ -202,7 +202,7 @@ base_theme <- theme_bw() +
 Fig2A <- ggplot() +
   geom_line(data = res_1$sort_output, aes(x = meannh, y = cum.prob, colour = "38"), size = 0.9) +
   geom_line(data = res_2$sort_output, aes(x = meannh, y = cum.prob, colour = "53.5"), size = 0.9) +
-  geom_line(data = res_3$sort_output, aes(x = meannh, y = cum.prob, colour = "18.5"), size = 0.9) +
+  geom_line(data = res_3$sort_output, aes(x = meannh, y = cum.prob, colour = "18.6"), size = 0.9) +
   
   geom_point(data = res_1$quarts, aes(x = n, y = cprob), size = 1.5) +
   geom_point(data = res_2$quarts, aes(x = n, y = cprob), size = 1.5) +
@@ -227,8 +227,8 @@ Fig2A <- ggplot() +
   
   scale_color_manual(
     values = cols,
-    breaks = c("18.5","38","53.5"),
-    labels = c("18.5","38","53.5")
+    breaks = c("18.6","38","53.5"),
+    labels = c("18.6","38","53.5")
   ) +
   
   labs(color = "Mean interpandemic\nperiod (years)",
@@ -287,7 +287,7 @@ q3 <- get_quarts(ifr_3)
 Fig2B <- ggplot() +
   geom_line(data = ifr_1, aes(x = IFR, y = cum.prob, colour = "38"), size = 0.9) +
   geom_line(data = ifr_2, aes(x = IFR, y = cum.prob, colour = "53.5"), size = 0.9) +
-  geom_line(data = ifr_3, aes(x = IFR, y = cum.prob, colour = "18.5"), size = 0.9) +
+  geom_line(data = ifr_3, aes(x = IFR, y = cum.prob, colour = "18.6"), size = 0.9) +
   
   geom_point(data = q1, aes(x = IFR, y = cprob), size = 1.5) +
   geom_point(data = q2, aes(x = IFR, y = cprob), size = 1.5) +
@@ -338,7 +338,7 @@ ifr_data <- data.frame(
             "SARS-CoV-2",
             "AIV (53.5 years)",
             "AIV (38 years)",
-            "AIV (18.5 years)"),
+            "AIV (18.6 years)"),
   estimate = c(4.7, 16, 46, 32, 16),
   lower = c(2.9, 16, 17, 9.6, 5.6),
   upper = c(6.5, 16, 97, 75, 33)
@@ -349,7 +349,7 @@ ifr_data$Virus <- factor(
   ifr_data$Virus,
   levels = rev(c("AIV (53.5 years)",
                  "AIV (38 years)",
-                 "AIV (18.5 years)",
+                 "AIV (18.6 years)",
                  "SARS-CoV-2",
                  "Seasonal influenza"))
 )
