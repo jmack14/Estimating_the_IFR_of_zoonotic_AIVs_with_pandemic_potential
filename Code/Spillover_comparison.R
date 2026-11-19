@@ -14,7 +14,6 @@ library(ggtext)
 library(lhs)
 library(sensitivity)
 library(triangle)
-library(here)
 
 # ============================================================
 # Load interpandemic period results
