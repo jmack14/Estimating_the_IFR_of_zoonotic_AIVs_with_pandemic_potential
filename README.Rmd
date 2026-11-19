@@ -31,7 +31,7 @@ This repository contains the code and outputs used to implement our model that d
 - bbmle (1.0.25.1)
 - lubridate (1.9.4)
 - ggridges (0.5.7)
-- here (1.0.2)
+- Cairo (1.7.0)
 
 ---
 
@@ -52,11 +52,12 @@ The `Code/` directory contains the following scripts:
 
 ### Ouput
 The `Output/` directory contains output files:
+- `Interpandemic_periods_results.RData`
 - `mean_nh_38.csv`, `mean_nh_53.5.csv`, `mean_nh_18.5.csv`
 - `transformed_samples_38.csv`, `transformed_samples_53.5.csv`, `transformed_samples_18.6.csv`
 - `Parameter_sensitivity.csv`, `Genotype_sensitivity.csv`, `Pandemic_sensitivity.csv`, `Reporting_sensitivity.csv`, `Mechanistic_boundary.csv`
 
-These files contain estimates of the annual number of human AIV infections and transformed posterior samples for mean interpandemic periods of 38, 53.5, and 18.6 years. They also contain the results of the sensitivity analyses and mechanistic boundary analysis. 
+These files contain the fitted gamma distribution models for the historical interpandemic periods, estimates of the annual number of human AIV infections and transformed posterior samples for mean interpandemic periods of 38, 53.5, and 18.6 years. They also contain the results of the sensitivity analyses and mechanistic boundary analysis. 
 
 ---
 
