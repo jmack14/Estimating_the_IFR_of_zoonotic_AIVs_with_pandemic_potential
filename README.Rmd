@@ -53,7 +53,7 @@ The `Code/` directory contains the following scripts:
 ### Ouput
 The `Output/` directory contains output files:
 - `Interpandemic_periods_results.RData`
-- `mean_nh_38.csv`, `mean_nh_53.5.csv`, `mean_nh_18.5.csv`
+- `mean_nh_38.csv`, `mean_nh_53.5.csv`, `mean_nh_18.6.csv`
 - `transformed_samples_38.csv`, `transformed_samples_53.5.csv`, `transformed_samples_18.6.csv`
 - `Parameter_sensitivity.csv`, `Genotype_sensitivity.csv`, `Pandemic_sensitivity.csv`, `Reporting_sensitivity.csv`, `Mechanistic_boundary.csv`
 
