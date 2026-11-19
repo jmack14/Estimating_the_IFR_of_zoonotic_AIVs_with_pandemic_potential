@@ -183,7 +183,7 @@ ridges_min <- ggplot() +
     data = ridgeP,
     aes(x = n, y = R0, group = R0, fill = after_stat(x)),
     scale = 1,
-    rel_min_height = 0.01
+    rel_min_height = 0.008
   ) +
   scale_x_continuous(expand = c(0,0), limits = c(0,7000)) +
   scale_fill_viridis_c(
@@ -219,7 +219,7 @@ ridges <- ggplot() +
     data = ridge,
     aes(x = n, y = R0, group = R0, fill = after_stat(x)),
     scale = 1,
-    rel_min_height = 0.01
+    rel_min_height = 0.008
   ) +
   scale_x_continuous(expand = c(0,0), limits = c(0,7000)) +
   scale_fill_viridis_c(
