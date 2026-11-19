@@ -2,6 +2,10 @@
 # Estimating the infection fatality ratio for humans infected with avian influenza viruses
 # ============================================================
 
+set.seed(20261117)
+
+options(scipen = 999)
+
 # ============================================================
 # Load libraries
 # ============================================================
@@ -17,23 +21,15 @@ library(lhs)
 library(sensitivity)
 library(triangle)
 library(here)
+library(Cairo)
 
 # ============================================================
 # Load interpandemic period results
 # ============================================================
 
-# Path relative to project root
-Interpandemic_results <- here("Code", "Clean_code", "Output", "Interpandemic_period_results.RData")
+Interpandemic_results <- "Interpandemic_period_results.RData"
 
-# Check if file exists before loading
-if (!file.exists(Interpandemic_results)) {
-  stop("Error: Interpandemic_period_results.RData not found.
-       Make sure the Output folder is inside Code/Clean_code/")
-}
-
-# Load the file
 load(Interpandemic_results)
-message("Interpandemic period results loaded successfully!")
 
 # ============================================================
 # pi_i function
@@ -320,13 +316,14 @@ Fig2B <- ggplot() +
 Fig2 <- Fig2A + Fig2B +
   plot_layout(ncol = 1)
 
-ggsave("Fig2.tiff",
-       Fig2,
-       width = 7,
-       height = 8,
-       dpi = 300,
-       device = "tiff",
-       compression = "lzw")
+ggsave(
+  filename = "Fig2.eps",
+  plot = Fig2,
+  width = 7,
+  height = 8,
+  units = "in",
+  device = cairo_ps
+)
 
 # ============================================================
 # Plot IFR comparison: Fig3
@@ -383,13 +380,12 @@ Fig3 <- ggplot(ifr_data, aes(x = estimate, y = Virus)) +
   base_theme
 
 ggsave(
-  filename = "Fig3.tiff",
+  filename = "Fig3.eps",
   plot = Fig3,
   width = 8,
   height = 5,
-  dpi = 300,
-  device = "tiff",
-  compression = "lzw"
+  units = "in",
+  device = cairo_ps
 )
 
 # ============================================================
@@ -446,11 +442,11 @@ plot_distributions <- function(transformed_samples) {
 FigA1 <- plot_distributions(res_1$transformed_samples)
 
 ggsave(
-  filename = "FigA1.tiff",
+  filename = "FigA1.eps",
   plot = FigA1,
-  device = "tiff",
-  height = 10,
   width = 12,
-  dpi = 300,
-  compression = "lzw"
+  height = 10,
+  units = "in",
+  device = cairo_ps
 )
+

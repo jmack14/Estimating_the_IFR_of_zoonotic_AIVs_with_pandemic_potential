@@ -14,17 +14,7 @@ library(here)
 # Read transformed samples
 # ============================================================
 
-# Path to transformed samples relative to project root
-transformed_file <- here("Code", "Clean_code", "Output", "transformed_samples_38.csv")
-
-# Check if file exists before reading
-if (!file.exists(transformed_file)) {
-  stop("Error: transformed_samples_38.csv not found.
-       Make sure the Output folder is inside the project root.")
-}
-
-transformed_samples <- read.csv(transformed_file, stringsAsFactors = FALSE) 
-message("Transformed samples loaded successfully!")
+transformed_samples <- read.csv("transformed_samples_38.csv", stringsAsFactors = FALSE) 
 
 # ============================================================
 # Calculate baseline mean pi
@@ -123,11 +113,10 @@ Fig4 <- ggplot(data = mean.Lambda, aes(x = O)) +
   )
 
 ggsave(
-  filename = "Fig4.tiff",
+  filename = "Fig4.eps",
   plot = Fig4,
-  device = "tiff",
-  width = 8,      
-  height = 5,     
-  dpi = 300,
-  compression = "lzw"
+  device = cairo_ps,
+  width = 8,
+  height = 5,
+  units = "in"
 )

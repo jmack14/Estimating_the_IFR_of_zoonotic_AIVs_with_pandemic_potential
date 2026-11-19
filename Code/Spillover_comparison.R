@@ -20,18 +20,9 @@ library(here)
 # Load interpandemic period results
 # ============================================================
 
-# Path relative to project root
-Interpandemic_results <- here("Code", "Clean_code", "Output", "Interpandemic_period_results.RData")
+Interpandemic_results <- "Interpandemic_period_results.RData"
 
-# Check if file exists before loading
-if (!file.exists(Interpandemic_results)) {
-  stop("Error: Interpandemic_period_results.RData not found.
-       Make sure the Output folder is inside Code/Clean_code/")
-}
-
-# Load the file
 load(Interpandemic_results)
-message("Interpandemic period results loaded successfully!") 
 
 # ============================================================
 # Helper functions
@@ -91,6 +82,79 @@ ridge <- bind_rows(
   sort.output4,
   sort.output6,
   sort.output8
+)
+
+# ============================================================
+# Generate minimum annual spillovers (P = 1)
+# ============================================================
+
+# Model assuming P = 1
+spillover_model_P <- function(parameters, R0) {
+  psi <- parameters[1]
+  a   <- parameters[2]
+  
+  P <- 1
+  
+  (1 - R0) / (psi * a * P)
+}
+
+# Wrapper to run Latin hypercube sampling
+run_lhs_P <- function(R0) {
+  
+  param_ranges <- list(
+    psi = list(shape = delta/theta0, scale = theta0),
+    a   = c(0.000012, 0.000024)
+  )
+  
+  lhs_samples <- randomLHS(10000, length(param_ranges))
+  
+  transformed_samples <- data.frame(
+    psi = qgamma(
+      lhs_samples[, 1],
+      shape = param_ranges$psi$shape,
+      scale = param_ranges$psi$scale
+    ),
+    a = qunif(
+      lhs_samples[, 2],
+      min = param_ranges$a[1],
+      max = param_ranges$a[2]
+    )
+  )
+  
+  output <- apply(
+    transformed_samples,
+    1,
+    spillover_model_P,
+    R0 = R0
+  )
+  
+  cum.prob <- seq(
+    1/length(output),
+    1,
+    1/length(output)
+  )
+  
+  data.frame(
+    n = sort(output),
+    cum.prob = cum.prob,
+    R0 = R0
+  )
+}
+
+# Run all R0 scenarios
+sort.outputP  <- run_lhs_P(0.0)
+sort.outputP2 <- run_lhs_P(0.2)
+sort.outputP4 <- run_lhs_P(0.4)
+sort.outputP6 <- run_lhs_P(0.6)
+sort.outputP8 <- run_lhs_P(0.8)
+
+# Combine minimum annual spillover distributions
+ridgeP <- bind_rows(
+  sort.outputP,
+  sort.outputP2,
+  sort.outputP4,
+  sort.outputP6,
+  sort.outputP8
 )
 
 # ============================================================
@@ -175,7 +239,8 @@ ridges <- ggplot() +
     legend.title = element_text(size = 18),
     legend.text  = element_text(size = 16),
     plot.tag = element_text(size = 18, face = "bold"),
-    plot.tag.position = c(0,1)
+    plot.tag.position = c(0,1),
+    plot.margin = margin(5.5, 15, 5.5, 5.5, unit = "pt")
   )
 
 # ============================================================
@@ -185,11 +250,11 @@ ridges <- ggplot() +
 Fig5 <- ridges_min + ridges
 
 ggsave(
-  filename = "Fig5.tiff",
+  filename = "Fig5.eps",
   plot = Fig5,
   width = 14,
   height = 7,
-  dpi = 300,
-  device = "tiff",
-  compression = "lzw"
+  units = "in",
+  device = cairo_ps
 )
+

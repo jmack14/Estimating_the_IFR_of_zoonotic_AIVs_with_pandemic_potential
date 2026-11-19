@@ -3,15 +3,13 @@
 # ============================================================
 
 # Load infection estimates
-dat38 <- read.csv(
-  "C:/Users/ER/Desktop/Fall_2025/Grad_school/thesis/Code/Clean_code/Output/transformed_samples_38.csv"
-)
+dat38 <- read.csv("transformed_samples_38.csv", stringsAsFactors = FALSE)
 
 # ------------------------------------------------------------
 # Input observed deaths
 # ------------------------------------------------------------
 
-reported_deaths <- 20.6  
+reported_deaths <- 20.6
 
 
 # ------------------------------------------------------------
@@ -26,36 +24,75 @@ reporting_scenarios <- c(
 )
 
 
-ifr_results <- lapply(
+# ------------------------------------------------------------
+# Empirical quantile function
+# ------------------------------------------------------------
+
+get_empirical_quantile <- function(x, p) {
+  
+  # Sort values from lowest to highest
+  x_sorted <- sort(x)
+  
+  # Cumulative probabilities
+  cum.prob <- seq(
+    1 / length(x_sorted),
+    1,
+    1 / length(x_sorted)
+  )
+  
+  # First observation with cumulative probability >= p
+  idx <- min(which(cum.prob >= p))
+  
+  x_sorted[idx]
+}
+
+
+# ------------------------------------------------------------
+# Calculate IFRs and uncertainty intervals
+# ------------------------------------------------------------
+
+IFR_results <- lapply(
   reporting_scenarios,
   function(reporting_fraction) {
     
     # Correct deaths for incomplete reporting
     adjusted_deaths <- reported_deaths / reporting_fraction
     
-    # IFR
+    # IFR per 10,000 infections
     IFR <- 100 * adjusted_deaths / dat38$meannh
     
     data.frame(
       Reporting = reporting_fraction,
-      Median_IFR = median(IFR),
-      Lower_95 = quantile(IFR, 0.025),
-      Upper_95 = quantile(IFR, 0.975)
+      Median_IFR = get_empirical_quantile(IFR, 0.50),
+      Lower_95   = get_empirical_quantile(IFR, 0.025),
+      Upper_95   = get_empirical_quantile(IFR, 0.975)
     )
   }
 )
 
 
-ifr_results <- do.call(rbind, ifr_results)
+# ------------------------------------------------------------
+# Combine results
+# ------------------------------------------------------------
 
-rownames(ifr_results) <- names(reporting_scenarios)
+IFR_results <- do.call(rbind, IFR_results)
 
-print(ifr_results)
+rownames(IFR_results) <- names(reporting_scenarios)
 
 
-# Save
+# ------------------------------------------------------------
+# Print results
+# ------------------------------------------------------------
+
+print(IFR_results)
+
+
+# ------------------------------------------------------------
+# Save results
+# ------------------------------------------------------------
+
 write.csv(
-  ifr_results,
+  IFR_results,
   "Reporting_sensitivity.csv",
   row.names = TRUE
 )

@@ -13,12 +13,13 @@ library(ggplot2)
 library(ggtext)
 library(scales)
 library(lubridate)
+library(Cairo)
 
 # ============================================================
 # Interpandemic period data
 # ============================================================
 
-pan_year <- c(1781, 1830, 1890, 1918, 1957, 1968, 2009)
+pan_year <- c(1781, 1830, 1889, 1918, 1957, 1968, 2009)
 
 # Interpandemic intervals
 dd <- diff(pan_year)
@@ -264,7 +265,14 @@ Fig1 <- ggplot(Timeline, aes(x = when, y = 0)) +
     axis.ticks.y = element_blank()
   )
 
-ggsave("Fig1.tiff", Fig1, width = 10, height = 6, dpi = 300, device = "tiff", compression = "lzw")
+ggsave(
+  filename = "Fig1.eps",
+  plot = Fig1,
+  width = 10,
+  height = 6,
+  units = "in",
+  device = cairo_ps
+)
 
 # ============================================================
 # Plot interpandemic period distributions: FigA2
@@ -291,7 +299,14 @@ FigA2 <- ggplot(psi.fit, aes(period, prob)) +
   ) +
   theme(axis.title.x = element_markdown())
 
-ggsave("FigA2.tiff", FigA2, width = 10, height = 4, dpi = 300, device = "tiff", compression = "lzw")
+ggsave(
+  filename = "FigA2.eps",
+  plot = FigA2,
+  width = 10,
+  height = 4,
+  units = "in",
+  device = cairo_ps
+)
 
 # ============================================================
 # Plot the effect of date on the interpandemic period: FigA3
@@ -315,4 +330,11 @@ FigA3 <- ggplot(plot_data, aes(x = dates, y = dd)) +
     axis.title.y = element_markdown()
   )
 
-ggsave("FigA3.tiff", FigA3, width = 10, height = 6, dpi = 300, device = "tiff", compression = "lzw")
+ggsave(
+  filename = "FigA3.eps",
+  plot = FigA3,
+  width = 10,
+  height = 6,
+  units = "in",
+  device = cairo_ps
+)
